@@ -11,11 +11,12 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/textView6"
         style="@style/TextViewTitle.Medium"
         android:text="Welcome, Mike"
         app:layout_constraintBottom_toTopOf="@+id/imageView2"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.182"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.227"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5" />
@@ -26,9 +27,11 @@
         android:layout_height="74dp"
         android:src="@drawable/icon_profile_template"
         app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView6"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5"
-        tools:layout_editor_absoluteX="367dp"
         tools:ignore="MissingConstraints" />
 
     <ImageView
@@ -37,12 +40,11 @@
         android:layout_height="419dp"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/snake_logo"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.237" />
 
     <TextView
         android:id="@+id/textView"
@@ -58,8 +60,9 @@
     <TextView
         android:id="@+id/textView3"
         style="@style/TextViewTitle.Medium"
+        android:layout_marginTop="5dp"
+        android:onClick="onClickMenu"
         android:text="Start"
-        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -70,6 +73,7 @@
     <TextView
         android:id="@+id/textView2"
         style="@style/TextViewTitle.Medium"
+        android:onClick="onClickMenu"
         android:text="Ranking"
         app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
@@ -81,6 +85,7 @@
     <TextView
         android:id="@+id/textView4"
         style="@style/TextViewTitle.Medium"
+        android:onClick="onClickMenu"
         android:text="Profile"
         app:layout_constraintBottom_toTopOf="@+id/textView5"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,6 +97,7 @@
     <TextView
         android:id="@+id/textView5"
         style="@style/TextViewTitle.Medium"
+        android:onClick="onClickMenu"
         android:text="Exit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
