@@ -1,6 +1,8 @@
 package com.example.snakegame;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,4 +23,21 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
     }
+
+    public void onClickMenu(View view) {
+        Intent intent;
+        if (view.getId() == R.id.textView3) {
+            intent = new Intent(this, StartActivity.class);
+            startActivity(intent);
+        } else if (view.getId() == R.id.textView2) {
+            intent = new Intent(this, RankingActivity.class);
+            startActivity(intent);
+        } else if (view.getId() == R.id.textView4) {
+            intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
+        } else if (view.getId() == R.id.textView5) {
+            finishAffinity();
+        }
+    }
+
 }
