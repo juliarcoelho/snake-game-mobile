@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextViewTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/fira_code_light</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextViewTitle.Large">
+        <item name="android:textSize">33sp</item>
+    </style>
+
+    <style name="TextViewTitle.Medium">
+        <item name="android:textSize">23sp</item>
+    </style>
+
+    <style name="TextViewTitle.Small">
+        <item name="android:textSize">19sp</item>
+    </style>
+</resources>
+

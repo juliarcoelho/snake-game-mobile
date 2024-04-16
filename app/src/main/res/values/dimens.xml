@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="profile_image_size">51dp</dimen>
+    <dimen name="snake_logo_size">304dp</dimen>
+</resources>
