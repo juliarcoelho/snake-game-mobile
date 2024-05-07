@@ -19,4 +19,58 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.039"
         app:srcCompat="?attr/homeAsUpIndicator" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="414dp"
+        android:layout_height="844dp"
+        app:srcCompat="@drawable/malha"
+        tools:layout_editor_absoluteX="-4dp"
+        tools:layout_editor_absoluteY="-2dp" />
+
+    <ImageButton
+        android:id="@+id/rightButton"
+        android:layout_width="97dp"
+        android:layout_height="49dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.843"
+        app:srcCompat="@mipmap/ic_uparrow_foreground" />
+
+    <ImageButton
+        android:id="@+id/rightButton"
+        android:layout_width="97dp"
+        android:layout_height="49dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/rightButton"
+        app:layout_constraintHorizontal_bias="0.816"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.926"
+        app:srcCompat="@mipmap/ic_leftarrow_foreground" />
+
+    <ImageButton
+        android:id="@+id/rightButton"
+        android:layout_width="97dp"
+        android:layout_height="49dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.166"
+        app:layout_constraintStart_toEndOf="@+id/rightButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.926"
+        app:srcCompat="@mipmap/ic_rightarrow_foreground" />
+
+    <ImageButton
+        android:id="@+id/rightButton"
+        android:layout_width="97dp"
+        android:layout_height="49dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.926"
+        app:srcCompat="@mipmap/ic_downarrow_foreground" />
 </androidx.constraintlayout.widget.ConstraintLayout>
