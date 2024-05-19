@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     public void onClickMenu(View view) {
         Intent intent;
         if (view.getId() == R.id.textView3) {
-            intent = new Intent(this, StartActivity.class);
+            intent = new Intent(this, Game.class);
             startActivity(intent);
         } else if (view.getId() == R.id.textView2) {
             intent = new Intent(this, RankingActivity.class);
