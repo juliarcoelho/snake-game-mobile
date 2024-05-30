@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -26,6 +27,8 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.parse.ParseObject;
 
 public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
 
@@ -312,6 +315,10 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
             }
         }
 
+        if (gameOver) {
+            saveScoreToDatabase(score);
+        }
+
         return gameOver;
     }
 
@@ -332,6 +339,25 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
             @Override
             public void onClick(View view) {
                 getOnBackPressedDispatcher().onBackPressed();
+            }
+        });
+    }
+
+    private void saveScoreToDatabase(int score) {
+        // Cria um novo objeto Parse
+        ParseObject scoreObject = new ParseObject("Score");
+
+        // Define o campo 'score' com o valor do score atual
+        scoreObject.put("score", score);
+
+        // Salva o objeto no Parse de forma assíncrona
+        scoreObject.saveInBackground(e -> {
+            if (e == null) {
+                // Score salvo com sucesso
+                Log.d("Game", "Score salvo com sucesso");
+            } else {
+                // Ocorreu um erro ao salvar o score
+                Log.e("Game", "Erro ao salvar o score: " + e.getMessage());
             }
         });
     }

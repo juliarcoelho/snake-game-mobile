@@ -10,6 +10,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.parse.Parse;
+
+
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -22,6 +26,12 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Parse.initialize(new Parse.Configuration.Builder(this)
+                .applicationId(getString(R.string.back4app_app_id))
+                .clientKey(getString(R.string.back4app_client_key))
+                .server(getString(R.string.back4app_server_url))
+                .build());
     }
 
     public void onClickMenu(View view) {

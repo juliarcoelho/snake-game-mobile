@@ -29,7 +29,8 @@ android {
 }
 
 dependencies {
-
+    implementation("com.github.parse-community.Parse-SDK-Android:parse:2.1.0")
+    implementation("com.github.parse-community:ParseLiveQuery-Android:1.2.2")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
