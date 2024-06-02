@@ -48,7 +48,10 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
     public static final int pointSize = 28;
     public static final int defaultTablePoints = 3;
 
-    public static final int snakeColor = Color.GREEN;
+    public static final int snakeColor = Color.rgb(0, 119, 5); //verde escuro
+    public static final int snakeHeadColor = Color.GREEN;
+    public static final int foodColor = Color.rgb(252, 194, 47); //amarelo
+    public static final int gameOverColor = Color.rgb(149, 155, 149); //cinza
 
     // velocidade de movimentação da cobrinha, valores podem ser setados entre 1 - 1000
     public static final int snakeMovingSpeed = 800;
@@ -65,6 +68,10 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
     private Paint pointColor = null;
 
     private int score = 0;
+    private boolean isGameOver = false;
+    private Paint headPaintColor = null;
+    private Paint foodPaintColor = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,14 +209,11 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
                 int headPositionX = snakePointsList.get(0).getPositionX();
                 int headPositionY = snakePointsList.get(0).getPositionY();
 
-                // checa se a cobrinha comeu o ponto
-                if(headPositionX == positionX && positionY == headPositionY) {
+                if (headPositionX == positionX && positionY == headPositionY) {
                     growSnake();
-
                     addPoints();
                 }
 
-                // checa qual direção a cobrinha está indo
                 switch (snakePosition) {
                     case "right":
                         snakePointsList.get(0).setPositionX(headPositionX + (pointSize * 2));
@@ -229,8 +233,7 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
                         break;
                 }
 
-                // checa se game over
-                if(checkGameOver(headPositionX, headPositionY)) {
+                if (checkGameOver(headPositionX, headPositionY)) {
                     timer.purge();
                     timer.cancel();
 
@@ -238,36 +241,27 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
                     builder.setTitle("Game Over");
                     builder.setMessage("Você perdeu! Sua pontuação foi: " + score);
                     builder.setCancelable(false);
-                    builder.setPositiveButton("Start Again", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            // reinicia o jogo
-                            init();
-                        }
-                    });
+                    builder.setPositiveButton("Start Again", (dialogInterface, i) -> init());
 
-                    // Tempo roda em background
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            builder.show();
-                        }
-                    });
+                    runOnUiThread(builder::show);
                 } else {
-
                     canvas = surfaceHolder.lockCanvas();
                     canvas.drawColor(Color.WHITE, PorterDuff.Mode.CLEAR);
 
-                    canvas.drawCircle(snakePointsList.get(0).getPositionX(), snakePointsList.get(0).getPositionY(), pointSize, createPaintColor());
+                    // Desenha a cabeça da cobra com a cor da cabeça
+                    canvas.drawCircle(snakePointsList.get(0).getPositionX(), snakePointsList.get(0).getPositionY(), pointSize, createHeadPaintColor());
 
-                    canvas.drawCircle(positionX, positionY, pointSize, createPaintColor());
+                    // Desenha o ponto a ser comido com a cor da comida
+                    canvas.drawCircle(positionX, positionY, pointSize, createFoodPaintColor());
 
-                    for(int i = 1; i < snakePointsList.size(); i++) {
+                    for (int i = 1; i < snakePointsList.size(); i++) {
                         int getTempPositionX = snakePointsList.get(i).getPositionX();
                         int getTempPositionY = snakePointsList.get(i).getPositionY();
 
                         snakePointsList.get(i).setPositionX(headPositionX);
                         snakePointsList.get(i).setPositionY(headPositionY);
+
+                        // Desenha o corpo da cobra com a cor atual
                         canvas.drawCircle(snakePointsList.get(i).getPositionX(), snakePointsList.get(i).getPositionY(), pointSize, createPaintColor());
 
                         headPositionX = getTempPositionX;
@@ -279,8 +273,8 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
 
             }
         }, 1000 - snakeMovingSpeed, 1000 - snakeMovingSpeed);
-
     }
+
 
     private void growSnake() {
         SnakePoints snakePoints = new SnakePoints(0, 0);
@@ -330,6 +324,26 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
             pointColor.setAntiAlias(true);
         }
         return  pointColor;
+    }
+
+    private Paint createHeadPaintColor() {
+        if (headPaintColor == null) {
+            headPaintColor = new Paint();
+            headPaintColor.setColor(snakeHeadColor);
+            headPaintColor.setStyle(Paint.Style.FILL);
+            headPaintColor.setAntiAlias(true);
+        }
+        return headPaintColor;
+    }
+
+    private Paint createFoodPaintColor() {
+        if (foodPaintColor == null) {
+            foodPaintColor = new Paint();
+            foodPaintColor.setColor(foodColor);
+            foodPaintColor.setStyle(Paint.Style.FILL);
+            foodPaintColor.setAntiAlias(true);
+        }
+        return foodPaintColor;
     }
 
     public void onClickBackButton( ) {
