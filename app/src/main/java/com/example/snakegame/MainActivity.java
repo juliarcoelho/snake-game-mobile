@@ -3,6 +3,8 @@ package com.example.snakegame;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,8 +15,9 @@ import androidx.core.view.WindowInsetsCompat;
 import com.parse.Parse;
 
 
-
 public class MainActivity extends AppCompatActivity {
+
+    private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
                 .clientKey(getString(R.string.back4app_client_key))
                 .server(getString(R.string.back4app_server_url))
                 .build());
+
+        shareText();
     }
 
     public void onClickMenu(View view) {
@@ -50,4 +55,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void shareText() {
+        ImageButton shareButton = findViewById(R.id.imageButtonShare);
+
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "Olá! Olha esse novo jogo da cobrinha que descobri:\n\n https://play.google.com/store/apps/details?id=com.amelosinteractive.snake&hl=en&pli=1");
+                try {
+                    startActivity(Intent.createChooser(shareIntent, "Compartilhar via"));
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this, "Nenhum aplicativo de compartilhamento encontrado.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 }
