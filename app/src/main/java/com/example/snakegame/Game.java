@@ -12,6 +12,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.content.Intent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +52,6 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
     public static final int snakeColor = Color.rgb(0, 119, 5); //verde escuro
     public static final int snakeHeadColor = Color.GREEN;
     public static final int foodColor = Color.rgb(252, 194, 47); //amarelo
-    public static final int gameOverColor = Color.rgb(149, 155, 149); //cinza
 
     // velocidade de movimentação da cobrinha, valores podem ser setados entre 1 - 1000
     public static final int snakeMovingSpeed = 800;
@@ -68,9 +68,9 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
     private Paint pointColor = null;
 
     private int score = 0;
-    private boolean isGameOver = false;
     private Paint headPaintColor = null;
     private Paint foodPaintColor = null;
+    private boolean isPaused = false;
 
 
     @Override
@@ -86,6 +86,7 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
         final AppCompatImageButton downButton = findViewById(R.id.downButton);
         final AppCompatImageButton leftButton = findViewById(R.id.leftButton);
         final AppCompatImageButton rightButton = findViewById(R.id.rightButton);
+        final AppCompatImageButton pauseButton = findViewById(R.id.pauseButton); // Botão de pausa
 
         surfaceView.getHolder().addCallback(this);
 
@@ -126,12 +127,38 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
                 }
             }
         });
+        pauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Inverte o estado de pausa
+                isPaused = !isPaused;
+                if (isPaused) {
+                    //muda img do botao de pause pra play
+                    pauseButton.setImageResource(R.drawable.play_botao);
+                    pauseGame();
+                } else {
+                    //volta img do botao de pause
+                    pauseButton.setImageResource(R.drawable.pause_botao);
+                    resumeGame();
+                }
+            }
+        });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+    }
+    private void pauseGame() {
+        // Cancela o timer para pausar a movimentação da cobra
+        timer.cancel();
+    }
+
+    private void resumeGame() {
+        // Reinicia o timer para retomar a movimentação da cobra
+        moveSnake();
     }
 
     @Override
