@@ -3,11 +3,14 @@ package com.example.snakegame;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -26,7 +29,6 @@ import java.util.Locale;
 
 public class RankingActivity extends AppCompatActivity {
 
-    private ListView rankingListView;
     private ArrayAdapter<String> adapter;
     private List<String> rankingList;
 
@@ -40,9 +42,20 @@ public class RankingActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        rankingListView = findViewById(R.id.rankingListView);
+        ListView rankingListView = findViewById(R.id.rankingListView);
         rankingList = new ArrayList<>();
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, rankingList);
+
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, rankingList) {
+            @NonNull
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                TextView view = (TextView) super.getView(position, convertView, parent);
+                view.setTextColor(getResources().getColor(android.R.color.white));
+                view.setTextSize(20f);
+                view.setBackgroundColor(getResources().getColor(R.color.blue_background));
+                return view;
+            }
+        };
         rankingListView.setAdapter(adapter);
         fetchTopScores();
         onClickBackButton();

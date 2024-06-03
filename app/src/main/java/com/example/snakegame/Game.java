@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -75,6 +76,8 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
     private boolean isPaused = false;
 
 
+    private Vibrator vibrator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +95,7 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
 
         surfaceView.getHolder().addCallback(this);
 
-
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         upButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -315,6 +318,8 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
 
         score++;
 
+        vibrator.vibrate(100);
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -344,6 +349,7 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
 
         if (gameOver) {
             saveScoreToDatabase(score);
+            vibrator.vibrate(500);
         }
 
         return gameOver;
