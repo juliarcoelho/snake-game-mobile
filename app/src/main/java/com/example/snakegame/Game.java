@@ -155,6 +155,8 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
             return insets;
         });
 
+        onClickBackButton();
+
     }
     private void pauseGame() {
         timer.cancel();
@@ -235,7 +237,7 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
 
     private void moveSnake() {
         timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
+        timer.schedule(new TimerTask() {
             @Override
             public void run() {
 
@@ -251,20 +253,20 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
                 // checa qual direção a cobrinha está indo
                 switch (snakePosition) {
                     case "right":
-                        snakePointsList.get(0).setPositionX(headPositionX + (pointSize * 2));
+                        snakePointsList.get(0).setPositionX(headPositionX + (pointSize));
                         snakePointsList.get(0).setPositionY(headPositionY);
                         break;
                     case "left":
-                        snakePointsList.get(0).setPositionX(headPositionX - (pointSize * 2));
+                        snakePointsList.get(0).setPositionX(headPositionX - (pointSize));
                         snakePointsList.get(0).setPositionY(headPositionY);
                         break;
                     case "up":
                         snakePointsList.get(0).setPositionX(headPositionX);
-                        snakePointsList.get(0).setPositionY(headPositionY - (pointSize * 2));
+                        snakePointsList.get(0).setPositionY(headPositionY - (pointSize));
                         break;
                     case "down":
                         snakePointsList.get(0).setPositionX(headPositionX);
-                        snakePointsList.get(0).setPositionY(headPositionY + (pointSize * 2));
+                        snakePointsList.get(0).setPositionY(headPositionY + (pointSize));
                         break;
                 }
 
@@ -285,10 +287,10 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
                     canvas.drawColor(Color.WHITE, PorterDuff.Mode.CLEAR);
 
                     // Desenha a cabeça da cobra com a cor da cabeça
-                    canvas.drawCircle(snakePointsList.get(0).getPositionX(), snakePointsList.get(0).getPositionY(), pointSize, createHeadPaintColor());
+                    canvas.drawRect(snakePointsList.get(0).getPositionX(), snakePointsList.get(0).getPositionY(), snakePointsList.get(0).getPositionX() + pointSize, snakePointsList.get(0).getPositionY() + pointSize, createHeadPaintColor());
 
                     // Desenha o ponto a ser comido com a cor da comida
-                    canvas.drawCircle(positionX, positionY, pointSize, createFoodPaintColor());
+                    canvas.drawRect(positionX, positionY, positionX + pointSize, positionY + pointSize, createFoodPaintColor());
 
                     for (int i = 1; i < snakePointsList.size(); i++) {
                         int getTempPositionX = snakePointsList.get(i).getPositionX();
@@ -298,7 +300,7 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
                         snakePointsList.get(i).setPositionY(headPositionY);
 
                         // Desenha o corpo da cobra com a cor atual
-                        canvas.drawCircle(snakePointsList.get(i).getPositionX(), snakePointsList.get(i).getPositionY(), pointSize, createPaintColor());
+                        canvas.drawRect(snakePointsList.get(i).getPositionX(), snakePointsList.get(i).getPositionY(), snakePointsList.get(i).getPositionX() + pointSize, snakePointsList.get(i).getPositionY() + pointSize, createPaintColor());
 
                         headPositionX = getTempPositionX;
                         headPositionY = getTempPositionY;
@@ -386,11 +388,15 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
     }
 
     public void onClickBackButton( ) {
-        ImageButton backButton = findViewById(R.id.backButton);
+        ImageButton backButton = findViewById(R.id.backGameButton);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(timer != null) {
+                    timer.cancel();
+                    timer = null;
+                }
                 getOnBackPressedDispatcher().onBackPressed();
             }
         });
