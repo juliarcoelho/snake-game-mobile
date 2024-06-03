@@ -239,11 +239,13 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
                 int headPositionX = snakePointsList.get(0).getPositionX();
                 int headPositionY = snakePointsList.get(0).getPositionY();
 
+                // checa se a cobrinha comeu o ponto
                 if (headPositionX == positionX && positionY == headPositionY) {
                     growSnake();
                     addPoints();
                 }
 
+                // checa qual direção a cobrinha está indo
                 switch (snakePosition) {
                     case "right":
                         snakePointsList.get(0).setPositionX(headPositionX + (pointSize * 2));
@@ -263,6 +265,7 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
                         break;
                 }
 
+                // checa se game over
                 if (checkGameOver(headPositionX, headPositionY)) {
                     timer.purge();
                     timer.cancel();
