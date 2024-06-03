@@ -14,6 +14,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.content.Intent;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -152,8 +154,9 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
 
     }
     private void pauseGame() {
-        // Cancela o timer para pausar a movimentação da cobra
         timer.cancel();
+        // Exibe o Snackbar informando que o jogo foi pausado
+        Snackbar.make(findViewById(R.id.main), "Jogo pausado", Snackbar.LENGTH_SHORT).show();
     }
 
     private void resumeGame() {
