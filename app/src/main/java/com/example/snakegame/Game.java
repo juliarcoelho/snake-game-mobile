@@ -68,10 +68,10 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
     private Canvas canvas = null;
 
     private Paint pointColor = null;
-
-    private int score = 0;
     private Paint headPaintColor = null;
     private Paint foodPaintColor = null;
+
+    private int score = 0;
     private boolean isPaused = false;
 
 
