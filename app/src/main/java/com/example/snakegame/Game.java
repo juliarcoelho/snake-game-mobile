@@ -37,7 +37,7 @@ import com.parse.ParseObject;
 public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
 
     // Lista os pontos da cobrinha / tamanho
-    private final List<SnakePoints> snakePointsList = new ArrayList<>();
+    List<SnakePoints> snakePointsList = new ArrayList<>();
     private SurfaceView surfaceView;
     private TextView scoreTV;
 
@@ -46,33 +46,37 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
 
     // posição da movimentação da cobra, valores podem ser "up", "down", "left" e "right"
     // por padrão a cobra começa indo para a direita
-    private String snakePosition = "right";
+    String snakePosition = "right";
 
     // tamanho do ponto da cobrinha
     public static final int pointSize = 28;
     public static final int defaultTablePoints = 3;
 
-    public static final int snakeColor = Color.rgb(0, 119, 5); //verde escuro
+    public static final int snakeColor = Color.BLUE;
+    //public static final int snakeColor = Color.rgb(0, 119, 5); //verde escuro
     public static final int snakeHeadColor = Color.GREEN;
-    public static final int foodColor = Color.rgb(252, 194, 47); //amarelo
+
+    public static final int foodColor = Color.RED;
+    //public static final int foodColor = Color.rgb(252, 194, 47); //amarelo
 
     // velocidade de movimentação da cobrinha, valores podem ser setados entre 1 - 1000
     public static final int snakeMovingSpeed = 800;
 
     // pontuação aleatória com as coordenadas na surfaceView
-    private int positionX, positionY;
+    int positionX;
+    int positionY;
 
     // tempo para mover a cobrinha (mudar a posição da cobrinha depois de um tempo específico (snakeMovingSpeed)
     private Timer timer;
 
     // canvas para desenhar a cobrinha
-    private Canvas canvas = null;
+    Canvas canvas = null;
 
     private Paint pointColor = null;
     private Paint headPaintColor = null;
     private Paint foodPaintColor = null;
 
-    private int score = 0;
+    int score = 0;
     private boolean isPaused = false;
 
 
@@ -174,7 +178,7 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
         this.surfaceHolder = surfaceHolder;
 
         // inicia os dados para a cobrinha / surfaceView
-        init();
+        initGame();
     }
 
     @Override
@@ -187,7 +191,7 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
 
     }
 
-    private void init() {
+    void initGame() {
 
         // Limpa os pontos da cobrinha / tamanho
         snakePointsList.clear();
@@ -215,7 +219,7 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
         moveSnake();
     }
 
-    private void addPoints() {
+    void addPoints() {
 
         // obtendo o tamanho da surfaceView para adicionar ponto na tela para cobrinha comer
         int surfaceWidth = surfaceView.getWidth() - (pointSize * 2);
@@ -279,7 +283,7 @@ public class Game extends AppCompatActivity implements SurfaceHolder.Callback {
                     builder.setTitle("Game Over");
                     builder.setMessage("Você perdeu! Sua pontuação foi: " + score);
                     builder.setCancelable(false);
-                    builder.setPositiveButton("Start Again", (dialogInterface, i) -> init());
+                    builder.setPositiveButton("Start Again", (dialogInterface, i) -> initGame());
 
                     runOnUiThread(builder::show);
                 } else {
